@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Day 3 interactive examples</title>
+  <link rel="stylesheet" href="">
+  <!-- p5.js library -->
+  <script type="text/javascript" src="libraries/p5.js"></script>
+  <!-- optional addons for sound/dom examples -->
+  <script type="text/javascript" src="libraries/p5.sound.js"></script>
+  <script type="text/javascript" src="libraries/p5.dom.js"></script>
+  <!-- scripts for rendering -->
+  <script type="text/javascript" src="libraries/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="libraries/render.js"></script>
+  <!-- code highlighting -->
+  <script type="text/javascript" src="libraries/prism.js"></script> 
+  <link rel="stylesheet" href="libraries/prism.css" type="text/css"/>
+  <style>
+  .ex{
+    padding:2rem 0;
+    border-bottom:1px dashed black;
+    max-width: 65rem;
+    margin:0 auto;
+  }
+  .example_container{
+    padding:1rem;
+    display: flex;
+  }
+
+  .cnv_div, .code {
+    margin:0 1rem;
+  }
+
+
+  h2 {
+    padding: 0 2rem;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+  .notes, .challenge {
+    padding: .75rem 2rem;
+  }
+  </style>
+</head>
+<body>
+<section class="ex">
+  <h2>Day3.1</h2>
+  <section class="example_container">
+    <div class="code">
+      <pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+}
+function draw() {
+  background(220);
+  let startX = 100; // Starting x position
+  let startY = 200; // Y position for all faces
+  let faceSize = 100; // Face size
+  let spacing = 120; // Space between faces
+
+  for (let i = 0; i < 4; i++) { 
+    drawFace(startX + i * spacing, startY, faceSize); // Draw faces in a row
+  }
+}
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+</code>
+</pre>
+    </div>  
+  </section>
+</section>
+
+<section class="ex">
+<h2>Day3.2</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+}
+function draw() {
+  background(220);
+  let startX = 100; // Starting x position
+  let startY = 200; // Y position for all faces
+  let faceSize = 100; // Face size
+  let spacing = 120; // Space between faces
+
+  for (let i = 0; i < 4; i++) { 
+    push(); // Save current transformation state
+    translate(startX + i * spacing, startY); // Move to each face position
+    drawFace(0, 0, faceSize); // Draw face at (0, 0) because of translation
+    pop(); // Restore previous transformation state
+  }
+}
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+
+    </code>
+    </pre>
+    </div>
+    
+  </section>
+  
+</section>
+
+<section class="ex">
+  <h2>Day3.3</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+}
+function draw() {
+  background(220);
+  noLoop()
+
+  for (let i = 0; i < 4; i++) {
+    let startX = 100; // Starting x position
+    let startY = 200; // Y position for all faces
+    let faceSize = random(20, 100); // Face size
+    let spacing = 120; // Space between faces
+    push(); // Save current transformation state
+    translate(startX + i * spacing, startY); // Move to each face position
+    drawFace(0, 0, faceSize); // Draw face at (0, 0) because of translation
+    pop(); // Restore previous transformation state
+  }
+}
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+
+function mousePressed(){
+  loop()
+}
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+<section class="ex">
+  <h2>day3.4</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Canvas for multiple faces
+}
+
+function draw() {
+  background(220);
+  
+  let startX = 100; // Starting x position
+  let startY = 100; // Starting y position
+  let faceSize = 100; // Face size
+  let spacingX = 120; // Horizontal spacing
+  let spacingY = 120; // Vertical spacing
+  let cols = 4; // Number of faces per row
+  let rows = 3; // Number of rows
+
+  for (let j = 0; j < rows; j++) { // Loop for rows
+    for (let i = 0; i < cols; i++) { // Loop for columns
+      push(); // Save transformation state
+      translate(startX + i * spacingX, startY + j * spacingY); // Move to grid position
+      drawFace(0, 0, faceSize); // Draw face at (0,0) in translated space
+      pop(); // Restore transformation state
+    }
+  }
+}
+
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+
+</code>
+    </pre>
+    </div>
+
+
+  </section>
+  <section class="notes">
+    Note that the inner loop in a "nested loop" works harder than the outside loop.  The outside loop runs once, then drops into the inner loop.  The inner loop then runs all the way through before going back up to the outer loop that again runs once before dropping down to run all the way through, etc.
+  </section>
+</section>
+<script> $(document).ready(function() { renderCode(); }); </script>
+</body>
+</html>
