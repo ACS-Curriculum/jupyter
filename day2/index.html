@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Day2 interactive examples</title>
+  <link rel="stylesheet" href="">
+  <!-- p5.js library -->
+  <script type="text/javascript" src="libraries/p5.js"></script>
+  <!-- optional addons for sound/dom examples -->
+  <script type="text/javascript" src="libraries/p5.sound.js"></script>
+  <script type="text/javascript" src="libraries/p5.dom.js"></script>
+  <!-- scripts for rendering -->
+  <script type="text/javascript" src="libraries/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="libraries/render.js"></script>
+  <!-- code highlighting -->
+  <script type="text/javascript" src="libraries/prism.js"></script> 
+  <link rel="stylesheet" href="libraries/prism.css" type="text/css"/>
+  <style>
+  .ex{
+    padding:2rem 0;
+    border-bottom:1px dashed black;
+    max-width: 65rem;
+    margin:0 auto;
+  }
+  .example_container{
+    padding:1rem;
+    display: flex;
+  }
+
+  .cnv_div, .code {
+    margin:0 1rem;
+  }
+
+
+  h2 {
+    padding: 0 2rem;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+  .notes, .challenge {
+    padding: .75rem 2rem;
+  }
+  </style>
+</head>
+<body>
+<section class="ex">
+  <h2>Day2.1</h2>
+  <section class="example_container">
+    <div class="code">
+      <pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  drawFace(200, 200, 150); // Draw face at (200,200) with size 150
+}
+
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2; // Eye horizontal offset
+  let eyeOffsetY = size * 0.2; // Eye vertical offset
+  let eyeSize = size * 0.2; // Eye size
+  let pupilSize = size * 0.07; // Pupil size
+  let mouthWidth = size * 0.67; // Mouth width
+  let mouthHeight = size * 0.33; // Mouth height
+  let mouthY = y + size * 0.15; // Mouth position
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Left eye
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Right eye
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Left pupil
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Right pupil
+
+  // Draw mouth
+  noFill();
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+</code>
+</pre>
+    </div>  
+  </section>
+</section>
+
+<section class="ex">
+<h2>Day2.2</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  
+  drawFace(150, 200, 150); // First face at (150,200) with size 150
+  drawFace(300, 200, 100); // Second face at (300,200) with size 100
+}
+
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2; // Eye horizontal offset
+  let eyeOffsetY = size * 0.2; // Eye vertical offset
+  let eyeSize = size * 0.2; // Eye size
+  let pupilSize = size * 0.07; // Pupil size
+  let mouthWidth = size * 0.67; // Mouth width
+  let mouthHeight = size * 0.33; // Mouth height
+  let mouthY = y + size * 0.15; // Mouth position
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Left eye
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Right eye
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Left pupil
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Right pupil
+
+  // Draw mouth
+  noFill();
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+    </code>
+    </pre>
+    </div>
+    
+  </section>
+  
+</section>
+
+<section class="ex">
+  <h2>Day2.3</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  
+  drawFace(150, 200, 150); // First face
+  drawFace(300, 200, 100); // Second face
+}
+
+// Function to draw a face using transformations
+function drawFace(x, y, size) {
+  push(); // Save current transformation state
+  translate(x, y); // Move origin to (x, y)
+
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = size * 0.15;
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(0, 0, size, size); // Centered at (0,0)
+
+  // Draw eyes
+  fill(255);
+  ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye
+  ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye
+
+  // Draw pupils
+  fill(0);
+  ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil
+  ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
+
+  // Draw mouth
+  noFill();
+  arc(0, mouthY, mouthWidth, mouthHeight, 0, PI);
+
+  pop(); // Restore previous transformation state
+}
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+<section class="ex">
+  <h2>Day2.4</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+let isWinking = false; // Toggle state for winking
+function setup() {
+  createCanvas(400, 400);
+}
+function draw() {
+  background(220);
+  drawFace(150, 200, 150, isWinking); // First face
+  drawFace(300, 200, 100, isWinking); // Second face
+}
+// Function to draw a face using transformations
+function drawFace(x, y, size, wink) {
+  push(); // Save current transformation state
+  translate(x, y); // Move origin to (x, y)
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = size * 0.15;
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(0, 0, size, size); // Centered at (0,0)
+  // Draw eyes
+  fill(255);
+  ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye open
+  if (wink) {
+    stroke(0);
+    strokeWeight(3);
+    line(-eyeOffsetX - eyeSize * 0.3, -eyeOffsetY, -eyeOffsetX + eyeSize * 0.3, -eyeOffsetY); // Left eye winking (line)
+    noStroke();
+  } else {
+    ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye open
+  }
+  // Draw pupils
+  fill(0);
+  ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
+  if (!wink) {
+    ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil if not winking
+  }
+  // Draw mouth
+  noFill();
+  arc(0, mouthY, mouthWidth, mouthHeight, 0, PI);
+  pop(); // Restore previous transformation state
+}
+// Toggle winking state on mouse press
+function mousePressed() {
+  isWinking = !isWinking;
+}
+
+</code>
+    </pre>
+    </div>
+
+
+  </section>
+  <section class="notes">
+    Note the use of the boolean (true/false) variable isWinking which is set to false at the top. This is a global variable up there which makes it accessible throughout the code.
+  </section>
+</section>
+
+<section class="ex">
+  <h2>Day2.5</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+let isWinking = false; // State variable for winking
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  drawFace(200, 200, 150, isWinking); // Draw face with winking state
+}
+
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size, wink) {
+  let eyeOffsetX = size * 0.2; // Eye horizontal offset
+  let eyeOffsetY = size * 0.2; // Eye vertical offset
+  let eyeSize = size * 0.2; // Eye size
+  let pupilSize = size * 0.07; // Pupil size
+  let mouthWidth = size * 0.67; // Mouth width
+  let mouthHeight = size * 0.33; // Mouth height
+  let mouthY = y + size * 0.15; // Mouth position
+  fill(255, 255, 0); // Draw face
+  ellipse(x, y, size, size);
+  // Draw eyes
+  fill(255);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Right eye stays open
+  if (wink) {
+    // Left eye winking (drawn as a line)
+    stroke(0);
+    strokeWeight(3);
+    line(x - eyeOffsetX - eyeSize * 0.3, y - eyeOffsetY, x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY);
+  } else {
+    // Left eye open
+    ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  }
+  // Draw pupils
+  fill(0);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Right pupil
+
+  if (!wink) {
+    ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Left pupil only if not winking
+  }
+  // Ensure mouth is visible
+  stroke(0);
+  strokeWeight(1);
+  noFill();
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+// Toggle winking state on mouse press using an if statement
+function mousePressed() {
+  if (isWinking) {
+    isWinking = false; // If winking, reset to normal
+  } else {
+    isWinking = true; // Otherwise, start winking
+  }
+}
+
+</code>
+    </pre>
+    </div>
+  </section>
+</section>
+
+<script> $(document).ready(function() { renderCode(); }); </script>
+</body>
+</html>
