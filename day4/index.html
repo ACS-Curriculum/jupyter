@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Week 4 array examples</title>
+  <link rel="stylesheet" href="">
+  <!-- p5.js library -->
+  <script type="text/javascript" src="libraries/p5.js"></script>
+  <!-- optional addons for sound/dom examples -->
+  <script type="text/javascript" src="libraries/p5.sound.js"></script>
+  <script type="text/javascript" src="libraries/p5.dom.js"></script>
+  <!-- scripts for rendering -->
+  <script type="text/javascript" src="libraries/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="libraries/render.js"></script>
+  <!-- code highlighting -->
+  <script type="text/javascript" src="libraries/prism.js"></script> 
+  <link rel="stylesheet" href="libraries/prism.css" type="text/css"/>
+  <style>
+  .ex{
+    padding:2rem 0;
+    border-bottom:1px dashed black;
+    max-width: 65rem;
+    margin:0 auto;
+  }
+  .example_container{
+    padding:1rem;
+    display: flex;
+  }
+
+  .cnv_div, .code {
+    margin:0 1rem;
+  }
+
+
+  h2 {
+    padding: 0 2rem;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+  .notes, .challenge {
+    padding: .75rem 2rem;
+  }
+  </style>
+</head>
+<body>
+<section class="ex">
+  <h2>arrays</h2>
+  <section class="example_container">
+    <div class="code">
+      <pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+}
+function draw() {
+  background(220);
+  let startY = 200; // Y position for all faces
+  let faceSize = 100; // Face size
+  let spacing = 120; // Space between faces
+  
+  // Array to store x-positions for faces
+  let faceXPositions = [100, 220, 340, 460]; // x-positions of the faces
+  for (let i = 0; i < faceXPositions.length; i++) {
+    push(); // Save current transformation state
+    translate(faceXPositions[i], startY); // Translate to the correct x-position
+    drawFace(0, 0, faceSize); // Draw face at translated position
+    pop(); // Restore previous transformation state
+  }
+}
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+}
+</code>
+</pre>
+    </div>  
+  </section>
+</section>
+
+
+
+<section class="ex">
+  <h2>Arrays</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+//declare an empty array variable
+var myCollection = [];
+
+function setup(){
+  createCanvas(400,400);
+  // you can fill the array by referencing the array's
+  // indices
+  for(var i =1; i <= 5; i++){
+    myCollection[i-1] = random(1,5);
+  }
+  
+  //or you can push items onto the array
+  myCollection.push("hello");
+  myCollection.push("world");
+  myCollection.push(3);
+  myCollection.push(2000.2);
+  
+  text(myCollection,0,40);
+
+  //how large is our array?
+  text(myCollection.length, 10,height-30);
+}
+</code>
+    </pre>
+    </div>
+  </section>
+</section>
+
+<section class="ex">
+  <h2>Arrays with numbers</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(400,400);
+
+  var evenNumbers = [];
+  for(var i=0; i < 100; i++){
+    evenNumbers[i] = i *2;
+  }
+  text(evenNumbers,0,0);
+  
+  var tenths = [];
+  var number = 0.0;
+  for(var j=0; j < 10; j++){
+    tenths[j] = (number += 0.1);
+  }
+  text(tenths, 0,height/2);
+}
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+
+
+<section class="ex">
+  <h2>Arrays drawing</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+var xPos = [];
+var yPos =[];
+var arraySize = 10;
+function setup() {
+  createCanvas(400,400);
+  for(var i=0; i < arraySize; i++){
+    xPos[i] = random(500.0);
+    yPos[i] = random(500.0);
+  }
+}
+
+function draw() {
+  background(255);
+  for(var i=0; i < xPos.length; i++){
+    fill(255,0,0,50);//r, g, b, a
+    rect(xPos[i], yPos[i], 300, 250);
+  }
+}
+</code>
+    </pre>
+    </div>
+    
+  </section>
+</section>
+
+
+<script> $(document).ready(function() { renderCode(); }); </script>
+</body>
+</html>
