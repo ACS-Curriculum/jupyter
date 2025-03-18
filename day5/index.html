@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Week 5 interactive examples</title>
+  <link rel="stylesheet" href="">
+  <!-- p5.js library -->
+  <script type="text/javascript" src="libraries/p5.js"></script>
+  <!-- optional addons for sound/dom examples -->
+  <script type="text/javascript" src="libraries/p5.sound.js"></script>
+  <script type="text/javascript" src="libraries/p5.dom.js"></script>
+  <!-- scripts for rendering -->
+  <script type="text/javascript" src="libraries/jquery-1.9.1.min.js"></script>
+  <script type="text/javascript" src="libraries/render.js"></script>
+  <!-- code highlighting -->
+  <script type="text/javascript" src="libraries/prism.js"></script> 
+  <link rel="stylesheet" href="libraries/prism.css" type="text/css"/>
+  <style>
+  .ex{
+    padding:2rem 0;
+    border-bottom:1px dashed black;
+    max-width: 65rem;
+    margin:0 auto;
+  }
+  .example_container{
+    padding:1rem;
+    display: flex;
+  }
+
+  .cnv_div, .code {
+    margin:0 1rem;
+  }
+
+
+  h2 {
+    padding: 0 2rem;
+  }
+  canvas {
+    border: 1px solid black;
+  }
+  .notes, .challenge {
+    padding: .75rem 2rem;
+  }
+  </style>
+</head>
+<body>
+<section class="ex">
+  <h2>Day 5.1</h2>
+  <section class="example_container">
+    <div class="code">
+      <pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+}
+function draw() {
+  background(220);
+
+  let startY = 200; // Y position for all faces
+  let faceSize = 100; // Face size
+  let spacing = 120; // Space between faces
+  // Array of face objects
+  let faces = [
+    { x: 100, y: startY, size: faceSize },
+    { x: 220, y: startY, size: faceSize },
+    { x: 340, y: startY, size: faceSize },
+    { x: 460, y: startY, size: faceSize }
+  ];
+  // Loop through the faces array and draw each face
+  for (let i = 0; i < faces.length; i++) {
+    push(); // Save current transformation state
+    translate(faces[i].x, faces[i].y); // Translate to the face position
+    drawFace(0, 0, faces[i].size); // Draw face at translated position
+    pop(); // Restore previous transformation state
+  }
+}
+// Function to draw a face with customizable position and size
+function drawFace(x, y, size) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+
+  // Draw eyes
+  fill(255);
+  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize);
+
+  // Draw pupils
+  fill(0);
+  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize);
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+
+</code>
+</pre>
+    </div>  
+  </section>
+</section>
+
+<section class="ex">
+<h2>Day 5.2</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+
+  // Create an array to store face objects
+  faces = [
+    new Face(100, 200, 100),
+    new Face(220, 200, 100),
+    new Face(340, 200, 100),
+    new Face(460, 200, 100)
+  ];
+}
+function draw() {
+  background(220);
+  // Loop through the faces array and draw each face
+  for (let i = 0; i < faces.length; i++) {
+    faces[i].drawFace(); // Call the drawFace method for each face object
+  }
+}
+// Class to represent a face
+class Face {
+  constructor(x, y, size) {
+    this.x = x; // x position of the face
+    this.y = y; // y position of the face
+    this.size = size; // Size of the face
+  }
+  // Method to draw the face
+  drawFace() {
+    let eyeOffsetX = this.size * 0.2;
+    let eyeOffsetY = this.size * 0.2;
+    let eyeSize = this.size * 0.2;
+    let pupilSize = this.size * 0.07;
+    let mouthWidth = this.size * 0.67;
+    let mouthHeight = this.size * 0.33;
+    let mouthY = this.size * 0.15; // Calculate mouth position relative to face size
+
+    push(); // Save current transformation state
+    translate(this.x, this.y); // Translate to the face position
+
+    // Draw face
+    fill(255, 255, 0);
+    ellipse(0, 0, this.size, this.size); // Draw face at translated position
+
+    // Draw eyes
+    fill(255);
+    ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye
+    ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye
+
+    // Draw pupils
+    fill(0);
+    ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil
+    ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
+
+    // Draw mouth
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    arc(0, mouthY, mouthWidth, mouthHeight, 0, PI); // Draw mouth at corrected position
+
+    pop(); // Restore previous transformation state
+  }
+}
+    </code>
+    </pre>
+    </div>
+    
+  </section>
+  
+</section>
+
+<section class="ex">
+  <h2>Day 5.3</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+let faces = []; // Array to hold face objects
+let isWinking = false; // Flag to track if the face should wink
+
+function setup() {
+  createCanvas(600, 400); // Larger canvas to fit multiple faces
+
+  let startX = 100; // Starting X position
+  let startY = 200; // Y position for all faces
+  let faceSize = 100; // Face size
+  let spacing = 120; // Space between faces
+
+  // Loop to create 5 face objects and store them in the faces array
+  for (let i = 0; i < 4; i++) {
+    let x = startX + i * spacing; // Calculate X position for each face
+    faces.push(new Face(x, startY, faceSize)); // Add new Face object to the array
+  }
+}
+
+function draw() {
+  background(220);
+
+  // Loop through the faces array and draw each face
+  for (let i = 0; i < faces.length; i++) {
+    faces[i].drawFace(); // Call the drawFace method for each face object
+  }
+}
+
+// Function to toggle the wink when mouse is pressed
+function mousePressed() {
+  isWinking = !isWinking; // Toggle the wink state
+}
+
+// Class to represent a face
+class Face {
+  constructor(x, y, size) {
+    this.x = x; // x position of the face
+    this.y = y; // y position of the face
+    this.size = size; // Size of the face
+  }
+  // Method to draw the face
+  drawFace() {
+    let eyeOffsetX = this.size * 0.2;
+    let eyeOffsetY = this.size * 0.2;
+    let eyeSize = this.size * 0.2;
+    let pupilSize = this.size * 0.07;
+    let mouthWidth = this.size * 0.67;
+    let mouthHeight = this.size * 0.33;
+    let mouthY = this.size * 0.15; // Calculate mouth position relative to face size
+
+    push(); // Save current transformation state
+    translate(this.x, this.y); // Translate to the face position
+    // Draw face
+    fill(255, 255, 0);
+    ellipse(0, 0, this.size, this.size); // Draw face at translated position
+    // Draw eyes
+    fill(255);
+    ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye
+    if (isWinking) {
+      ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize * 0.5); // Right eye wink (vertical size reduced)
+    } else {
+      ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye normal size
+    }
+    // Draw pupils
+    fill(0);
+    ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil
+    if (!isWinking) {
+      ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
+    }
+    // Draw mouth
+    noFill();
+    stroke(0);
+    strokeWeight(2);
+    arc(0, mouthY, mouthWidth, mouthHeight, 0, PI); // Draw mouth at corrected position
+    pop(); // Restore previous transformation state
+  }
+}
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+
+<script> $(document).ready(function() { renderCode(); }); </script>
+</body>
+</html>
