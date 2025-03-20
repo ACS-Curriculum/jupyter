@@ -103,32 +103,29 @@ function drawFace(x, y, size) {
 </section>
 
 <section class="ex">
-<h2>Day4.2</h2>
+<h2>Array of Numbers</h2>
 <section class="example_container">
   <div class="code">
 <pre>
 <code class="language-javascript">
-//declare an empty array variable
-var myCollection = [];
+var numbers = [5, 12, 23, 37, 42, 56, 78, 91]; // Array of numbers
+var currentNumber = 0; // Stores the displayed number
 
-function setup(){
-  createCanvas(400,400);
-  // you can fill the array by referencing the array's
-  // indices
-  for(var i =1; i <= 5; i++){
-    myCollection[i-1] = random(1,5);
-  }
-  
-  //or you can push items onto the array
-  myCollection.push("hello");
-  myCollection.push("world");
-  myCollection.push(3);
-  myCollection.push(2000.2);
-  
-  text(myCollection,0,40);
+function setup() {
+  createCanvas(400, 400);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  fill(0);
+}
 
-  //how large is our array?
-  text(myCollection.length, 10,height-30);
+function draw() {
+  background(220);
+  text(currentNumber, width / 2, height / 2); // Display the number
+}
+
+// Click to show a random number from the array
+function mousePressed() {
+  currentNumber = random(numbers);
 }
 
     </code>
@@ -140,27 +137,63 @@ function setup(){
 </section>
 
 <section class="ex">
-  <h2>Array with numbers</h2>
+  <h2>Array of Strings</h2>
 <section class="example_container">
   <div class="code">
 <pre>
 <code class="language-javascript">
-function setup() {
-  createCanvas(400,400);
+var birds = ["Sparrow", "Eagle", "Robin", "Parrot", "Owl", "Hawk", "Penguin"];
+var index = 0; // Keeps track of which bird is displayed
 
-  var evenNumbers = [];
-  for(var i=0; i < 100; i++){
-    evenNumbers[i] = i *2;
-  }
-  text(evenNumbers,0,0);
-  
-  var tenths = [];
-  var number = 0.0;
-  for(var j=0; j < 10; j++){
-    tenths[j] = (number += 0.1);
-  }
-  text(tenths, 0,height/2);
+function setup() {
+  createCanvas(400, 400);
+  background(220);
+  textSize(32);
+  textAlign(CENTER, CENTER);
+  fill(0);
 }
+
+function draw() {
+  background(220); // Clear the screen each frame
+  text(birds[index], width / 2, height / 2);
+}
+
+// Click to cycle through birds
+function mousePressed() {
+  index = (index + 1) % birds.length; // Loops back after last bird
+}
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+<section class="ex">
+  <h2>Array of Emojis</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+var emojis = ["😀", "🐦", "🚀", "🌟", "🎸", "🍕", "🐱", "🏀"]; // Array of emojis
+var currentEmoji = "😀"; // Default emoji
+
+function setup() {
+  createCanvas(400, 400);
+  textSize(64); // Big emoji size
+  textAlign(CENTER, CENTER);
+}
+
+function draw() {
+  background(220);
+  text(currentEmoji, width / 2, height / 2); // Display the emoji
+}
+
+// Click to change to a random emoji
+function mousePressed() {
+  currentEmoji = random(emojis);
+}
+
 
     </code>
     </pre>
@@ -170,7 +203,51 @@ function setup() {
 </section>
 
 <section class="ex">
-  <h2>Parallel arrays</h2>
+  <h2>Array of Colors</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+var colors = []; // Declare a global array
+
+function setup() {
+  createCanvas(500, 200);
+  noStroke();
+  reset(); // Fill the array with colors at the start
+}
+
+function draw() {
+  background(220);
+
+  // Draw circles using the colors in the array
+  for (var i = 0; i < colors.length; i++) {
+    fill(colors[i]); // Use array value as fill color
+    ellipse(80 * (i + 1), height / 2, 60, 60); // Draw circles evenly spaced
+  }
+}
+
+function reset() {
+  colors = []; // Clear the global array before refilling
+  for (var i = 0; i < 5; i++) {
+    //colors[i] = color(random(255), random(255), random(255)); // Random RGB colors
+    colors.push(color(random(255), random(255), random(255))); // Store random colors
+  }
+}
+
+function mousePressed() {
+  reset(); // Refresh colors when mouse is pressed
+}
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+
+<section class="ex">
+  <h2>Parallel Arrays</h2>
 <section class="example_container">
   <div class="code">
 <pre>
