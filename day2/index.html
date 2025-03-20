@@ -159,8 +159,8 @@ function setup() {
 
 function draw() {
   background(220);
-  
-  drawFace(150, 200, 150); // First face
+
+  drawFace(150, 200,150); // First face
   drawFace(300, 200, 100); // Second face
 }
 
@@ -170,20 +170,22 @@ function drawFace(x, y, size) {
   let eyeOffsetY = size * 0.2;
   let eyeSize = size * 0.2;
   let pupilSize = size * 0.07;
-  let mouthWidth = size * 0.67;
+  let mouthWidth = size * 0.57;
   let mouthHeight = size * 0.33;
   let mouthY = y + size * 0.15;
 
   let leftEyeX = x - eyeOffsetX;
   let rightEyeX = x + eyeOffsetX;
   let eyeY = y - eyeOffsetY;
-  
+
   let leftPupilX = leftEyeX + eyeSize * 0.3;
   let rightPupilX = rightEyeX + eyeSize * 0.3;
   let pupilY = eyeY;
 
   // Draw face
   fill(255, 255, 0);
+  stroke(0);
+  strokeWeight(1);
   ellipse(x, y, size, size);
 
   // Draw eyes
@@ -198,8 +200,6 @@ function drawFace(x, y, size) {
 
   // Draw mouth
   noFill();
-  stroke(0);
-  strokeWeight(size * 0.05);
   arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
 }
 
