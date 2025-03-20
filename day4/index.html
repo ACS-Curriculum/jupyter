@@ -189,10 +189,11 @@ function draw() {
   text(currentEmoji, width / 2, height / 2); // Display the emoji
 }
 
-// Click to change to a random emoji
 function mousePressed() {
-  currentEmoji = random(emojis);
+  let index = floor(random(emojis.length)); // Ensure a valid index
+  currentEmoji = emojis[index]; // Assign an emoji from the array
 }
+
 
 
     </code>
