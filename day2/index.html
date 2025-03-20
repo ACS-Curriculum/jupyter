@@ -277,27 +277,23 @@ function drawFace(x, y, size, wink) {
   fill(255);
   ellipse(rightEyeX, eyeY, eyeSize, eyeSize); // Right eye (always open)
 
-  if (wink) {
+  if (wink==true) {
     // Left eye winking (drawn as a line)
     stroke(0);
     strokeWeight(3);
     line(leftEyeX - eyeSize * 0.3, eyeY, leftEyeX + eyeSize * 0.3, eyeY);
   } else {
-    // Left eye open
-    ellipse(leftEyeX, eyeY, eyeSize, eyeSize);
-  }
-
-  // Draw pupils (only in open eyes)
-  fill(0);
-  let rightPupilX = constrain(rightEyeX + mappedPupilX, rightEyeX - pupilRange, rightEyeX + pupilRange);
-  let rightPupilY = constrain(eyeY + mappedPupilY, eyeY - pupilRange, eyeY + pupilRange);
-  ellipse(rightPupilX, rightPupilY, pupilSize, pupilSize); // Right pupil
-
-  if (!wink) {
-    let leftPupilX = constrain(leftEyeX + mappedPupilX, leftEyeX - pupilRange, leftEyeX + pupilRange);
-    let leftPupilY = constrain(eyeY + mappedPupilY, eyeY - pupilRange, eyeY + pupilRange);
+    ellipse(leftEyeX, eyeY, eyeSize, eyeSize); // Left eye (only if not winking)
+    fill(0)
+    let leftPupilX = constrain(leftEyeX + mappedPupilX,leftEyeX - pupilRange,leftEyeX + pupilRange);
+    let leftPupilY = constrain(eyeY + mappedPupilY,eyeY - pupilRange,eyeY + pupilRange);
     ellipse(leftPupilX, leftPupilY, pupilSize, pupilSize); // Left pupil (only if not winking)
   }
+  // Draw pupils (only in open eyes)
+  fill(0);
+  let rightPupilX = constrain(rightEyeX + mappedPupilX,rightEyeX - pupilRange,rightEyeX + pupilRange);
+  let rightPupilY = constrain(eyeY + mappedPupilY,eyeY - pupilRange,eyeY + pupilRange);
+  ellipse(rightPupilX, rightPupilY, pupilSize, pupilSize); // Right pupil
 
   // Draw mouth
   noFill();
