@@ -123,10 +123,12 @@ function draw() {
   text(currentNumber, width / 2, height / 2); // Display the number
 }
 
-// Click to show a random number from the array
 function mousePressed() {
-  currentNumber = random(numbers);
+  let index = floor(random(numbers.length)); // Generate a valid index
+  currentNumber = numbers[index]; // Pick a number from the array
 }
+
+
 
     </code>
     </pre>
