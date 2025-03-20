@@ -164,39 +164,45 @@ function draw() {
   drawFace(300, 200, 100); // Second face
 }
 
-// Function to draw a face using transformations
+// Function to draw a face with explicit positioning
 function drawFace(x, y, size) {
-  push(); // Save current transformation state
-  translate(x, y); // Move origin to (x, y)
-
   let eyeOffsetX = size * 0.2;
   let eyeOffsetY = size * 0.2;
   let eyeSize = size * 0.2;
   let pupilSize = size * 0.07;
   let mouthWidth = size * 0.67;
   let mouthHeight = size * 0.33;
-  let mouthY = size * 0.15;
+  let mouthY = y + size * 0.15;
+
+  let leftEyeX = x - eyeOffsetX;
+  let rightEyeX = x + eyeOffsetX;
+  let eyeY = y - eyeOffsetY;
+  
+  let leftPupilX = leftEyeX + eyeSize * 0.3;
+  let rightPupilX = rightEyeX + eyeSize * 0.3;
+  let pupilY = eyeY;
 
   // Draw face
   fill(255, 255, 0);
-  ellipse(0, 0, size, size); // Centered at (0,0)
+  ellipse(x, y, size, size);
 
   // Draw eyes
   fill(255);
-  ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye
-  ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye
+  ellipse(leftEyeX, eyeY, eyeSize, eyeSize);
+  ellipse(rightEyeX, eyeY, eyeSize, eyeSize);
 
   // Draw pupils
   fill(0);
-  ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil
-  ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
+  ellipse(leftPupilX, pupilY, pupilSize, pupilSize);
+  ellipse(rightPupilX, pupilY, pupilSize, pupilSize);
 
   // Draw mouth
   noFill();
-  arc(0, mouthY, mouthWidth, mouthHeight, 0, PI);
-
-  pop(); // Restore previous transformation state
+  stroke(0);
+  strokeWeight(size * 0.05);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
 }
+
 
     </code>
     </pre>
@@ -207,73 +213,6 @@ function drawFace(x, y, size) {
 
 <section class="ex">
   <h2>Day2.4</h2>
-<section class="example_container">
-  <div class="code">
-<pre>
-<code class="language-javascript">
-let isWinking = false; // Toggle state for winking
-function setup() {
-  createCanvas(400, 400);
-}
-function draw() {
-  background(220);
-  drawFace(150, 200, 150, isWinking); // First face
-  drawFace(300, 200, 100, isWinking); // Second face
-}
-// Function to draw a face using transformations
-function drawFace(x, y, size, wink) {
-  push(); // Save current transformation state
-  translate(x, y); // Move origin to (x, y)
-  let eyeOffsetX = size * 0.2;
-  let eyeOffsetY = size * 0.2;
-  let eyeSize = size * 0.2;
-  let pupilSize = size * 0.07;
-  let mouthWidth = size * 0.67;
-  let mouthHeight = size * 0.33;
-  let mouthY = size * 0.15;
-  // Draw face
-  fill(255, 255, 0);
-  ellipse(0, 0, size, size); // Centered at (0,0)
-  // Draw eyes
-  fill(255);
-  ellipse(eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Right eye open
-  if (wink) {
-    stroke(0);
-    strokeWeight(3);
-    line(-eyeOffsetX - eyeSize * 0.3, -eyeOffsetY, -eyeOffsetX + eyeSize * 0.3, -eyeOffsetY); // Left eye winking (line)
-    noStroke();
-  } else {
-    ellipse(-eyeOffsetX, -eyeOffsetY, eyeSize, eyeSize); // Left eye open
-  }
-  // Draw pupils
-  fill(0);
-  ellipse(eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Right pupil
-  if (!wink) {
-    ellipse(-eyeOffsetX + eyeSize * 0.3, -eyeOffsetY, pupilSize, pupilSize); // Left pupil if not winking
-  }
-  // Draw mouth
-  noFill();
-  arc(0, mouthY, mouthWidth, mouthHeight, 0, PI);
-  pop(); // Restore previous transformation state
-}
-// Toggle winking state on mouse press
-function mousePressed() {
-  isWinking = !isWinking;
-}
-
-</code>
-    </pre>
-    </div>
-
-
-  </section>
-  <section class="notes">
-    Note the use of the boolean (true/false) variable isWinking which is set to false at the top. This is a global variable up there which makes it accessible throughout the code.
-  </section>
-</section>
-
-<section class="ex">
-  <h2>Day2.5</h2>
 <section class="example_container">
   <div class="code">
 <pre>
@@ -333,6 +272,96 @@ function mousePressed() {
     isWinking = true; // Otherwise, start winking
   }
 }
+</code>
+    </pre>
+    </div>
+
+
+  </section>
+  <section class="notes">
+    Note the use of the boolean (true/false) variable isWinking which is set to false at the top. This is a global variable up there which makes it accessible throughout the code.
+  </section>
+</section>
+
+<section class="ex">
+  <h2>Day2.5</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+let isWinking = false; // State variable for winking
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220);
+  drawFace(200, 200, 150, isWinking); // Draw face with winking state
+}
+
+// Function to draw a face with eyes that follow the mouse
+function drawFace(x, y, size, wink) {
+  let eyeOffsetX = size * 0.2;
+  let eyeOffsetY = size * 0.2;
+  let eyeSize = size * 0.2;
+  let pupilSize = size * 0.07;
+  let mouthWidth = size * 0.67;
+  let mouthHeight = size * 0.33;
+  let mouthY = y + size * 0.15;
+
+  let leftEyeX = x - eyeOffsetX;
+  let rightEyeX = x + eyeOffsetX;
+  let eyeY = y - eyeOffsetY;
+
+  let pupilRange = eyeSize * 0.3; // Restrict pupil movement inside the eye
+
+  // Map mouse movement to pupil range
+  let mappedPupilX = map(mouseX, 0, width, -pupilRange, pupilRange);
+  let mappedPupilY = map(mouseY, 0, height, -pupilRange, pupilRange);
+
+  // Draw face
+  fill(255, 255, 0);
+  ellipse(x, y, size, size);
+
+  // Draw eyes
+  fill(255);
+  ellipse(rightEyeX, eyeY, eyeSize, eyeSize); // Right eye (always open)
+
+  if (wink) {
+    // Left eye winking (drawn as a line)
+    stroke(0);
+    strokeWeight(3);
+    line(leftEyeX - eyeSize * 0.3, eyeY, leftEyeX + eyeSize * 0.3, eyeY);
+  } else {
+    // Left eye open
+    ellipse(leftEyeX, eyeY, eyeSize, eyeSize);
+  }
+
+  // Draw pupils (only in open eyes)
+  fill(0);
+  let rightPupilX = constrain(rightEyeX + mappedPupilX, rightEyeX - pupilRange, rightEyeX + pupilRange);
+  let rightPupilY = constrain(eyeY + mappedPupilY, eyeY - pupilRange, eyeY + pupilRange);
+  ellipse(rightPupilX, rightPupilY, pupilSize, pupilSize); // Right pupil
+
+  if (!wink) {
+    let leftPupilX = constrain(leftEyeX + mappedPupilX, leftEyeX - pupilRange, leftEyeX + pupilRange);
+    let leftPupilY = constrain(eyeY + mappedPupilY, eyeY - pupilRange, eyeY + pupilRange);
+    ellipse(leftPupilX, leftPupilY, pupilSize, pupilSize); // Left pupil (only if not winking)
+  }
+
+  // Draw mouth
+  noFill();
+  stroke(0);
+  strokeWeight(2);
+  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
+}
+
+// Toggle winking state on mouse press
+function mousePressed() {
+  isWinking = !isWinking;
+}
+
 
 </code>
     </pre>
