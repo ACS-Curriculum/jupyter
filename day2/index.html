@@ -94,61 +94,10 @@ function drawFace(x, y, size) {
   </section>
 </section>
 
-<section class="ex">
-<h2>Day2.2</h2>
-<section class="example_container">
-  <div class="code">
-<pre>
-<code class="language-javascript">
-function setup() {
-  createCanvas(400, 400);
-}
 
-function draw() {
-  background(220);
-  
-  drawFace(150, 200, 150); // First face at (150,200) with size 150
-  drawFace(300, 200, 100); // Second face at (300,200) with size 100
-}
-
-// Function to draw a face with customizable position and size
-function drawFace(x, y, size) {
-  let eyeOffsetX = size * 0.2; // Eye horizontal offset
-  let eyeOffsetY = size * 0.2; // Eye vertical offset
-  let eyeSize = size * 0.2; // Eye size
-  let pupilSize = size * 0.07; // Pupil size
-  let mouthWidth = size * 0.67; // Mouth width
-  let mouthHeight = size * 0.33; // Mouth height
-  let mouthY = y + size * 0.15; // Mouth position
-
-  // Draw face
-  fill(255, 255, 0);
-  ellipse(x, y, size, size);
-
-  // Draw eyes
-  fill(255);
-  ellipse(x - eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Left eye
-  ellipse(x + eyeOffsetX, y - eyeOffsetY, eyeSize, eyeSize); // Right eye
-
-  // Draw pupils
-  fill(0);
-  ellipse(x - eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Left pupil
-  ellipse(x + eyeOffsetX + eyeSize * 0.3, y - eyeOffsetY, pupilSize, pupilSize); // Right pupil
-
-  // Draw mouth
-  noFill();
-  arc(x, mouthY, mouthWidth, mouthHeight, 0, PI);
-}
-    </code>
-    </pre>
-    </div>
-    
-  </section>
-  
-</section>
 
 <section class="ex">
-  <h2>Day2.3</h2>
+  <h2>Day2.2</h2>
 <section class="example_container">
   <div class="code">
 <pre>
@@ -212,7 +161,7 @@ function drawFace(x, y, size) {
 </section>
 
 <section class="ex">
-  <h2>Day2.4</h2>
+  <h2>Day2.3</h2>
 <section class="example_container">
   <div class="code">
 <pre>
@@ -284,7 +233,7 @@ function mousePressed() {
 </section>
 
 <section class="ex">
-  <h2>Day2.5</h2>
+  <h2>Day2.4</h2>
 <section class="example_container">
   <div class="code">
 <pre>
