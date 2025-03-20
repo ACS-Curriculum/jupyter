@@ -213,7 +213,7 @@ function drawFace(x, y, size) {
 }
 
 function mousePressed(){
-  loop()
+ redraw()
 }
 
     </code>
@@ -295,6 +295,59 @@ function drawFace(x, y, size) {
     Note that the inner loop in a "nested loop" works harder than the outside loop.  The outside loop runs once, then drops into the inner loop.  The inner loop then runs all the way through before going back up to the outer loop that again runs once before dropping down to run all the way through, etc.
   </section>
 </section>
+
+<section class="ex">
+  <h2>Day3.5</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+let r = 0;
+let g = 0;
+let b = 0;
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(30);
+
+  let cx = width / 2;
+  let cy = height / 2;
+  let radius = 100;
+
+  beginShape();
+  for (let i = 0; i < 10; i++) {
+    let angle = (TWO_PI * i) / 10;
+    let x = cx + cos(angle) * radius;
+    let y = cy + sin(angle) * radius;
+
+    if (frameCount % 180 < 90) {
+      // Wobbles for 1.5 sec, stable for 1.5 sec
+      x += random(-10, 10);
+      y += random(-10, 10);
+      r = random(0, 255);
+      g = random(0, 255);
+      b = random(0, 255);
+    }
+    noFill();
+    stroke(r, g, b);
+    strokeWeight(6);
+    vertex(x, y);
+  }
+  endShape(CLOSE);
+}
+
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
+
+
 <script> $(document).ready(function() { renderCode(); }); </script>
 </body>
 </html>
