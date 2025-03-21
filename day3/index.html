@@ -346,7 +346,64 @@ function draw() {
   </section>
   
 </section>
+<section class="ex">
+  <h2>Day3.6</h2>
+<section class="example_container">
+  <div class="code">
+<pre>
+<code class="language-javascript">
+function setup() {
+  createCanvas(400, 400);
+  background(220);
+  reset(); // Initialize the first pattern
+}
 
+function draw() {
+  if (frameCount % 60 === 0) {// Refresh the pattern every 2 seconds (120 frames)
+    reset();
+  }
+}
+
+function reset() {
+  background(220); // Clear the canvas before drawing a new pattern
+  let x = random(-20, -200); // Random starting x-position
+  let y = random(-20, -200); // Random starting y-position
+  let loopNumber = floor(random(5, 240)); // Random number of shapes to draw
+  let tx = width / 2; // Set translation point to canvas center
+  let ty = height / 2;
+  translate(tx, ty); // Move the drawing origin to center
+  for (let i = 0; i < loopNumber; i++) { // Loop to draw multiple rotated shapes
+    push(); // Save the transformation state
+    rotate(i * 0.08); // Rotate each shape progressively
+    if (i % 2 === 0) { // Alternate between blue and red for each shape
+      fill(0, 0, 255); // Blue
+    } else {
+      fill(255, 0, 0); // Red
+    }
+    uglyShape(x + i * 10, y + i * 15, loopNumber);// Call function to draw the shape at calculated positions
+    pop(); // Restore transformation state
+  }
+}
+
+function uglyShape(x1, y1, s) {// Function to draw a custom shape
+  line(x1 - 50, y1 + 50, x1 + 50, y1 - 50); // Draw diagonal cross lines
+  ellipse(x1, y1, s, s);// Draw a circle at the given position with size 's'
+  line(x1, y1 - 400, x1, y1 + 200);// Draw vertical and horizontal lines crossing through the center
+  line(x1 - 400, y1, x1 + 400, y1);
+}
+
+function keyPressed() {
+  saveGif("day1.gif", 5);
+}
+
+
+
+    </code>
+    </pre>
+    </div>
+  </section>
+  
+</section>
 
 <script> $(document).ready(function() { renderCode(); }); </script>
 </body>
